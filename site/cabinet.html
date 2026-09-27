@@ -3458,13 +3458,7 @@ class Component extends DCLogic {
       return bar(l,p+'%',p+'%',p>=90?'var(--ok)':p>=75?'var(--fg)':'var(--acc)',dOk(yes,total));};
     const parts=[
       pctPart('Соблюдение сроков',st&&st.on_time_yes,st&&st.on_time_total,(y,t)=>y+' из '+t+' последних оценённых поставок в срок','Появится после первых оценок поставок'),
-      pctPart('Соответствие качеству',st&&st.quality_yes,st&&st.quality_total,()=>st.complaints_6m?plural(st.complaints_6m,'рекламация','рекламации','рекламаций')+' за 6 месяцев':'без рекламаций за 6 месяцев','Появится после первых оценок качества'),
-      st&&st.response_median_min!=null
-        ?bar('Скорость ответа на запросы',st.response_median_min+' мин',(st.response_median_min<=15?90:st.response_median_min<=60?60:30)+'%','var(--fg)','медиана по вашим ответам')
-        :none('Скорость ответа на запросы','Появится, когда начнёте отвечать на запросы покупателей'),
-      st&&st.refusals_6m!=null
-        ?bar('Отказы после согласования',String(st.refusals_6m),Math.min(100,st.refusals_6m*12)+'%',st.refusals_6m?'var(--acc)':'var(--ok)',st.refusals_6m?'снижают индекс надёжности':'отказов нет')
-        :none('Отказы после согласования','Появится вместе с заказами на площадке')];
+      pctPart('Соответствие качеству',st&&st.quality_yes,st&&st.quality_total,()=>st.complaints_6m?plural(st.complaints_6m,'рекламация','рекламации','рекламаций')+' за 6 месяцев':'без рекламаций за 6 месяцев','Появится после первых оценок качества')];
     const reviews=((R&&R.reviews)||[]).map(v=>{const tags=[];
       if(v.on_time===true)tags.push({l:'В СРОК',c:'var(--ok)'});else if(v.on_time===false)tags.push({l:'С ЗАДЕРЖКОЙ',c:'var(--acc)'});
       if(v.quality_ok===false)tags.push({l:'РЕКЛАМАЦИЯ',c:'var(--acc)'});else if(v.quality_ok===true)tags.push({l:'КАЧЕСТВО ОК',c:'var(--mute)'});
