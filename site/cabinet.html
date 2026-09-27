@@ -1973,13 +1973,13 @@ input[type=range]{accent-color:var(--acc)}
 
       <!-- ===== SUPPLIER: RATING ===== -->
       <sc-if value="{{ pg.rating }}">
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:20px;align-items:start">
-          <div style="background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:28px;display:flex;flex-direction:column;gap:14px;background-image:radial-gradient(circle at 50% 130%,color-mix(in oklch,var(--ok) 20%,transparent),transparent 60%)">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:20px;align-items:stretch">
+          <div style="background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:28px;display:flex;flex-direction:column;justify-content:space-between;gap:14px;background-image:radial-gradient(circle at 50% 130%,color-mix(in oklch,var(--ok) 20%,transparent),transparent 60%)">
             <span style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.08em;color:var(--mute)">ИНДЕКС НАДЁЖНОСТИ</span>
             <span style="font-family:Unbounded;font-size:96px;line-height:1;letter-spacing:-.05em;color:{{ rt.bigC }}">{{ rt.big }}<sc-if value="{{ rt.has }}"><span style="font-size:.3em;color:var(--mute)"> / 5</span></sc-if></span>
             <span style="font-size:15px;color:var(--mute);line-height:1.5">{{ rt.text }}</span>
           </div>
-          <div style="background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:24px;display:flex;flex-direction:column;gap:18px">
+          <div style="background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:28px;display:flex;flex-direction:column;justify-content:space-around;gap:22px">
             <sc-for list="{{ ratingParts }}" as="x" hint-placeholder-count="4">
               <div style="display:flex;flex-direction:column;gap:8px"><span style="display:flex;justify-content:space-between;font-size:14px"><span>{{ x.l }}</span><span style="font-family:'JetBrains Mono';color:{{ x.c }}">{{ x.v }}</span></span>
                 <span style="height:6px;border-radius:3px;background:var(--line);overflow:hidden"><span style="display:block;height:100%;width:{{ x.w }};background:{{ x.c }};border-radius:3px"></span></span>
