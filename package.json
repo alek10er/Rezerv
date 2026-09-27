@@ -1,0 +1,13 @@
+{
+  "name": "rezerv-site",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node server.js",
+    "vendor": "node scripts/update-vendor.js"
+  },
+  "devDependencies": {
+    "@supabase/supabase-js": "^2.45.0",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
+  }
+}

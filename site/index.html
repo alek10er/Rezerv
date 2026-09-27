@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>РЕЗЕРВ — AI-агент закупок</title>
+<script>window.__resources={"https://unpkg.com/react@18.3.1/umd/react.production.min.js":"assets/react.production.min.js","https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js":"assets/react-dom.production.min.js"};</script>
+<script src="vendor/supabase.js"></script>
+<script src="config.js"></script>
+<script src="assets/auth.js"></script>
+<script src="assets/dc-runtime.js"></script>
+
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<style>/* cyrillic-ext */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/3ae0dad237.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/3576e677eb.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/b1b5690e06.woff2") format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/ffcfa7a246.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/bd4781a31b.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/b636a65da4.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/3ae0dad237.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/3576e677eb.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/b1b5690e06.woff2") format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/ffcfa7a246.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/bd4781a31b.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/b636a65da4.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/4cdf0bed08.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/e58febde31.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/42b71be38a.woff2") format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/8998d15ac0.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/6d36d5bded.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/938c6e8019.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/4cdf0bed08.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/e58febde31.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/42b71be38a.woff2") format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/8998d15ac0.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/6d36d5bded.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/938c6e8019.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/4cdf0bed08.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/e58febde31.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/42b71be38a.woff2") format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/8998d15ac0.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/6d36d5bded.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("assets/fonts/938c6e8019.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/fonts/4cdf0bed08.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/fonts/e58febde31.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/fonts/42b71be38a.woff2") format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/fonts/8998d15ac0.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/fonts/6d36d5bded.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/fonts/938c6e8019.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("assets/fonts/8c0a958b25.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("assets/fonts/3a5ed4d113.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("assets/fonts/381c0c3149.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("assets/fonts/c07fbf1bfe.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("assets/fonts/8616dc3550.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/8c0a958b25.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/3a5ed4d113.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/381c0c3149.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/c07fbf1bfe.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("assets/fonts/8616dc3550.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/8c0a958b25.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/3a5ed4d113.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/381c0c3149.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/c07fbf1bfe.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("assets/fonts/8616dc3550.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/fonts/8c0a958b25.woff2") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/fonts/3a5ed4d113.woff2") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/fonts/381c0c3149.woff2") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/fonts/c07fbf1bfe.woff2") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("assets/fonts/8616dc3550.woff2") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+</style>
+<style>
+:root{--bg:#0c0d0b;--bg2:#121310;--panel:#161714;--fg:#eeede7;--mute:#8d8c85;--line:rgba(255,255,255,.09);--acc:oklch(0.74 0.17 50);--ok:oklch(0.8 0.17 145);--accInk:#140a02;color-scheme:dark}
+html[data-theme="light"]{--bg:#f2f1ec;--bg2:#e9e8e2;--panel:#fbfaf6;--fg:#141511;--mute:#66655f;--line:rgba(0,0,0,.1);--acc:oklch(0.64 0.19 45);--ok:oklch(0.58 0.16 145);--accInk:#fff;color-scheme:light}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:Manrope,system-ui,sans-serif;-webkit-font-smoothing:antialiased;transition:background .4s,color .4s}
+a{color:var(--fg);text-decoration:none}a:hover{color:var(--acc)}
+input[type=range]{accent-color:var(--acc)}
+section{scroll-margin-top:64px}
+@media (max-width:760px){
+[data-m=hdr]{padding:12px 16px!important;gap:10px!important}
+[data-m=nav],[data-m=themeTxt]{display:none!important}
+[data-m=hdrCta]{padding:10px 14px!important;font-size:13px!important;margin-left:auto}
+[data-m=themeBtn]{padding:10px!important}
+[data-m=heroIn]{padding:36px 16px 48px!important;gap:36px!important}
+[data-m=h1]{font-size:clamp(32px,9.6vw,56px)!important}
+[data-m=lead]{font-size:17px!important}
+[data-m=ctas]{flex-direction:column}
+[data-m=ctas]>a{justify-content:center;text-align:center;padding:16px 20px!important}
+[data-m=demo]{height:540px!important}
+[data-m=matRow]{grid-template-columns:minmax(0,1fr) 72px 38px!important;gap:10px!important}
+[data-m=offer]{grid-template-columns:minmax(0,1fr) auto auto!important;gap:10px!important;font-size:12px!important}
+[data-m=offerRating]{display:none}
+[data-m=draftName]{font-size:18px!important}
+[data-m=secIn]{padding:64px 16px!important;gap:36px!important}
+[data-m=h2]{font-size:clamp(28px,8vw,40px)!important}
+[data-m=p]{font-size:16px!important}
+[data-m=step]{grid-template-columns:40px minmax(0,1fr)!important;gap:12px!important;padding:20px 0!important}
+[data-m=stepTitle]{font-size:21px!important}
+[data-m=stage]{min-height:340px!important;padding:24px!important;border-radius:18px!important}
+[data-m=bigBtn]{padding:20px 36px!important;font-size:19px!important}
+[data-m=chartBox]{padding:16px!important;border-radius:18px!important}
+[data-m=playBtn]{margin-left:0!important;width:100%}
+[data-m=chart]{height:220px!important}
+[data-m=axisMid]{display:none}
+[data-m=stat]{padding:20px!important}
+[data-m=statV]{font-size:34px!important}
+[data-m=startIn]{padding:72px 16px!important;gap:24px!important}
+[data-m=h2big]{font-size:clamp(32px,9vw,52px)!important}
+[data-m=form]{flex-direction:column;border-radius:20px!important}
+[data-m=form] input{padding:14px 12px!important}
+[data-m=sentMsg]{border-radius:18px!important}
+[data-m=foot]{padding:24px 16px!important}
+}
+@keyframes rise{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+@keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in oklch,var(--acc) 60%,transparent)}100%{box-shadow:0 0 0 18px transparent}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes fill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes pop{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:var(--bg);color:var(--fg);overflow-x:hidden">
+
+<header style="position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);background:color-mix(in oklch,var(--bg) 72%,transparent);border-bottom:1px solid var(--line)">
+  <div style="max-width:1320px;margin:0 auto;padding:16px 28px;display:flex;align-items:center;gap:32px" data-m="hdr">
+    <a href="#top" style="display:flex;align-items:center;gap:10px;font-family:Unbounded;font-weight:700;font-size:18px;letter-spacing:.04em">
+      <span style="width:14px;height:14px;background:var(--acc);transform:rotate(45deg);display:block"></span>
+      <span>{{ brand }}</span>
+    </a>
+    <nav data-m="nav" style="display:flex;gap:26px;font-size:14px;color:var(--mute);flex:1;flex-wrap:wrap">
+      <a href="#how">Как работает</a>
+      <a href="#sim">Симулятор</a>
+      <a href="#cabinet">Кабинет</a>
+    </nav>
+    <button data-m="themeBtn" sc-camel-on-click="{{ toggleTheme }}" style="display:flex;align-items:center;gap:8px;background:transparent;border:1px solid var(--line);color:var(--fg);padding:9px 14px;border-radius:999px;font-family:'JetBrains Mono';font-size:12px;cursor:pointer">
+      <span style="width:10px;height:10px;border-radius:50%;border:1.5px solid var(--fg);background:linear-gradient(90deg,var(--fg) 50%,transparent 50%)"></span>
+      <span data-m="themeTxt">{{ themeLabel }}</span>
+    </button>
+    <button data-m="hdrCta" sc-camel-on-click="{{ openLogin }}" style="display:flex;align-items:center;gap:8px;background:var(--fg);color:var(--bg);border:0;padding:11px 18px;border-radius:999px;font-family:Manrope;font-weight:600;font-size:14px;white-space:nowrap;cursor:pointer"><span style="width:8px;height:8px;border-radius:50%;background:{{ userDot }}"></span>{{ cabLabel }}</button>
+  </div>
+</header>
+
+<section id="top" ref="{{ heroRef }}" sc-camel-on-mouse-move="{{ heroMove }}" style="position:relative;border-bottom:1px solid var(--line);background-image:radial-gradient(700px circle at var(--mx,72%) var(--my,35%),color-mix(in oklch,var(--acc) 16%,transparent),transparent 60%),linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:100% 100%,64px 64px,64px 64px">
+  <div data-m="heroIn" style="max-width:1320px;margin:0 auto;padding:72px 28px 88px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr));gap:56px;align-items:center">
+    <div style="display:flex;flex-direction:column;gap:30px">
+      <div style="display:flex;align-items:center;gap:10px;font-family:'JetBrains Mono';font-size:12px;letter-spacing:.08em;color:var(--mute);animation:rise .8s both">
+        <span style="width:8px;height:8px;border-radius:50%;background:var(--ok);animation:blink 1.4s infinite"></span>
+        <span>AI PROCUREMENT AGENT · ДЛЯ ПРОИЗВОДСТВ</span>
+      </div>
+      <h1 data-m="h1" style="margin:0;font-family:Unbounded;font-weight:500;font-size:clamp(42px,6.2vw,96px);line-height:.98;letter-spacing:-.035em;text-wrap:balance">
+        <span style="display:block;animation:rise .9s .05s both">Закупки,</span>
+        <span style="display:block;animation:rise .9s .15s both">которые делают</span>
+        <span style="display:block;animation:rise .9s .25s both">себя <span style="color:var(--acc)">сами.</span></span>
+      </h1>
+      <p data-m="lead" style="margin:0;max-width:540px;font-size:19px;line-height:1.55;color:var(--mute);animation:rise .9s .35s both;text-wrap:pretty">Агент следит за остатками, прогнозирует расход, сам находит поставщиков и торгуется. Вам остаётся одна кнопка — <span style="color:var(--fg);font-weight:600">«Утвердить»</span>.</p>
+      <div data-m="ctas" style="display:flex;gap:12px;flex-wrap:wrap;animation:rise .9s .45s both">
+        <a href="#" sc-camel-on-click="{{ openLoginLink }}" style="background:var(--acc);color:var(--accInk);padding:17px 26px;border-radius:999px;font-weight:700;font-size:16px;display:flex;align-items:center;gap:10px">Попробовать бесплатно <span>→</span></a>
+        <a href="#sim" style="border:1px solid var(--line);padding:17px 26px;border-radius:999px;font-weight:600;font-size:16px">Смоделировать свой склад</a>
+      </div>
+    </div>
+
+    <div style="position:relative;animation:rise 1s .3s both">
+      <div style="position:absolute;inset:-1px;border-radius:22px;background:linear-gradient(140deg,color-mix(in oklch,var(--acc) 60%,transparent),transparent 40%,transparent 60%,color-mix(in oklch,var(--ok) 45%,transparent));opacity:.7"></div>
+      <div data-m="demo" style="position:relative;background:var(--panel);border-radius:21px;margin:1px;height:600px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 40px 120px -30px rgba(0,0,0,.5)">
+        <div style="display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line);font-family:'JetBrains Mono';font-size:12px">
+          <span style="width:8px;height:8px;border-radius:50%;background:{{ phaseColor }};animation:blink 1.2s infinite"></span>
+          <span style="letter-spacing:.06em">{{ brand }} · АГЕНТ</span>
+          <span style="margin-left:auto;color:var(--mute)">{{ phaseLabel }}</span>
+        </div>
+        <div style="padding:16px 18px;display:flex;flex-direction:column;gap:12px;border-bottom:1px solid var(--line)">
+          <sc-for list="{{ mats }}" as="m" hint-placeholder-count="4">
+            <div data-m="matRow" style="display:grid;grid-template-columns:minmax(0,1fr) 150px 44px;gap:12px;align-items:center;font-size:13px;opacity:{{ m.op }};transition:opacity .4s">
+              <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ m.name }}</span>
+              <span style="height:6px;border-radius:3px;background:var(--line);position:relative;overflow:hidden">
+                <span style="position:absolute;left:30%;top:0;bottom:0;width:1px;background:var(--mute)"></span>
+                <span style="position:absolute;left:0;top:0;bottom:0;width:{{ m.w }};background:{{ m.c }};border-radius:3px;transition:width .6s,background .3s"></span>
+              </span>
+              <span style="font-family:'JetBrains Mono';font-size:12px;text-align:right;color:{{ m.c }}">{{ m.pct }}</span>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="flex:1;padding:16px 18px;overflow:hidden;display:flex;flex-direction:column;gap:10px">
+          <sc-if value="{{ isMonitor }}" hint-placeholder-val="{{ true }}">
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--mute);text-align:center">
+              <div style="font-family:Unbounded;font-size:28px;color:var(--fg)">Всё в норме</div>
+              <div style="font-size:14px">Прогноз расхода обновляется в реальном времени</div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ showOffers }}">
+            <div style="font-family:'JetBrains Mono';font-size:11px;color:var(--mute);letter-spacing:.08em">ПРЕДЛОЖЕНИЯ ПОСТАВЩИКОВ · {{ targetName }}</div>
+            <sc-for list="{{ offers }}" as="o">
+              <div data-m="offer" style="display:grid;grid-template-columns:minmax(0,1fr) auto auto auto;gap:14px;align-items:center;padding:11px 12px;border-radius:10px;border:1px solid {{ o.border }};background:{{ o.bg }};font-size:13px;animation:pop .4s both">
+                <span style="font-weight:600">{{ o.sup }}</span>
+                <span style="font-family:'JetBrains Mono'">{{ o.price }}</span>
+                <span style="color:var(--mute)">{{ o.days }}</span>
+                <span data-m="offerRating" style="color:var(--mute)">★ {{ o.rating }}</span>
+              </div>
+            </sc-for>
+          </sc-if>
+          <sc-if value="{{ showChat }}">
+            <div style="font-family:'JetBrains Mono';font-size:11px;color:var(--mute);letter-spacing:.08em;padding-top:4px">ПЕРЕГОВОРЫ · EMAIL</div>
+            <sc-for list="{{ msgs }}" as="c">
+              <sc-if value="{{ c.agent }}">
+                <div style="align-self:flex-end;max-width:82%;background:var(--fg);color:var(--bg);padding:9px 13px;border-radius:14px 14px 4px 14px;font-size:13px;line-height:1.4;animation:pop .35s both">{{ c.text }}</div>
+              </sc-if>
+              <sc-if value="{{ c.sup }}">
+                <div style="align-self:flex-start;max-width:82%;border:1px solid var(--line);padding:9px 13px;border-radius:14px 14px 14px 4px;font-size:13px;line-height:1.4;animation:pop .35s both">{{ c.text }}</div>
+              </sc-if>
+            </sc-for>
+          </sc-if>
+          <sc-if value="{{ showDraft }}">
+            <div style="flex:1;display:flex;flex-direction:column;gap:14px;border:1px solid var(--line);border-radius:14px;padding:18px;animation:pop .45s both;background:var(--bg2)">
+              <div style="display:flex;justify-content:space-between;font-family:'JetBrains Mono';font-size:12px;color:var(--mute)"><span>ПРОЕКТ ЗАКАЗА</span><span>{{ draft.no }}</span></div>
+              <div data-m="draftName" style="font-family:Unbounded;font-size:22px;line-height:1.2">{{ draft.name }}</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 18px;font-size:13px">
+                <div style="display:flex;flex-direction:column;gap:2px"><span style="color:var(--mute)">Поставщик</span><span style="font-weight:600">{{ draft.sup }}</span></div>
+                <div style="display:flex;flex-direction:column;gap:2px"><span style="color:var(--mute)">Объём</span><span style="font-weight:600">{{ draft.qty }}</span></div>
+                <div style="display:flex;flex-direction:column;gap:2px"><span style="color:var(--mute)">Сумма</span><span style="font-weight:600;font-family:'JetBrains Mono'">{{ draft.total }}</span></div>
+                <div style="display:flex;flex-direction:column;gap:2px"><span style="color:var(--mute)">Экономия</span><span style="font-weight:600;color:var(--ok);font-family:'JetBrains Mono'">{{ draft.saved }}</span></div>
+              </div>
+              <sc-if value="{{ canApprove }}">
+                <button sc-camel-on-click="{{ approve }}" style="margin-top:auto;background:var(--acc);color:var(--accInk);border:0;padding:16px;border-radius:12px;font-family:Unbounded;font-size:15px;font-weight:500;cursor:pointer;animation:pulse 1.6s infinite">Утвердить заказ</button>
+              </sc-if>
+              <sc-if value="{{ isApproved }}">
+                <div style="margin-top:auto;background:var(--ok);color:#06130a;padding:16px;border-radius:12px;font-family:Unbounded;font-size:15px;text-align:center;animation:pop .3s both">✓ Отправлено поставщику</div>
+              </sc-if>
+            </div>
+          </sc-if>
+        </div>
+
+        <div style="border-top:1px solid var(--line);padding:12px 18px;display:flex;flex-direction:column;gap:5px;font-family:'JetBrains Mono';font-size:11px;height:88px;overflow:hidden;background:var(--bg2)">
+          <sc-for list="{{ log }}" as="l" hint-placeholder-count="3">
+            <div style="display:flex;gap:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
+              <span style="color:var(--mute)">{{ l.t }}</span>
+              <span style="color:{{ l.c }}">{{ l.tag }}</span>
+              <span style="overflow:hidden;text-overflow:ellipsis">{{ l.text }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div style="border-bottom:1px solid var(--line);overflow:hidden;padding:18px 0;background:var(--bg2)">
+  <div style="display:flex;width:max-content;animation:marquee 40s linear infinite;font-family:'JetBrains Mono';font-size:13px;color:var(--mute)">
+    <div style="display:flex;gap:48px;padding-right:48px">
+      <span>ЗК-2026-01412 · <span style="color:var(--ok)">утверждён</span></span><span>СевМеталл · цена −6,2%</span><span>Гранулы ПП · точка заказа через 3 дня</span><span>ЛКМ Групп · отсрочка 45 дней</span><span>Подшипник-Центр · доставка за счёт поставщика</span><span>ЗК-2026-01413 · <span style="color:var(--acc)">ждёт подтверждения</span></span><span>Уралпрокат · срок 5 дней</span>
+    </div>
+    <div style="display:flex;gap:48px;padding-right:48px">
+      <span>ЗК-2026-01412 · <span style="color:var(--ok)">утверждён</span></span><span>СевМеталл · цена −6,2%</span><span>Гранулы ПП · точка заказа через 3 дня</span><span>ЛКМ Групп · отсрочка 45 дней</span><span>Подшипник-Центр · доставка за счёт поставщика</span><span>ЗК-2026-01413 · <span style="color:var(--acc)">ждёт подтверждения</span></span><span>Уралпрокат · срок 5 дней</span>
+    </div>
+  </div>
+</div>
+
+<section id="how" style="border-bottom:1px solid var(--line)">
+  <div data-m="secIn" style="max-width:1320px;margin:0 auto;padding:120px 28px;display:flex;flex-direction:column;gap:64px">
+    <div data-reveal="1" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:32px;align-items:end">
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <span style="font-family:'JetBrains Mono';font-size:12px;letter-spacing:.1em;color:var(--acc)">[01] КАК ЭТО РАБОТАЕТ</span>
+        <h2 data-m="h2" style="margin:0;font-family:Unbounded;font-weight:500;font-size:clamp(34px,4.4vw,64px);line-height:1.02;letter-spacing:-.03em;text-wrap:balance">Четыре шага. Три из них — не ваши.</h2>
+      </div>
+      <p data-m="p" style="margin:0;font-size:18px;line-height:1.6;color:var(--mute);max-width:520px;text-wrap:pretty">Снабженец перестаёт быть оператором таблиц и писем. Агент работает круглосуточно в рамках правил, которые задаёте вы.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:24px">
+      <div style="display:flex;flex-direction:column">
+        <sc-for list="{{ steps }}" as="s" hint-placeholder-count="4">
+          <div data-m="step" sc-camel-on-click="{{ s.pick }}" style="cursor:pointer;border-top:1px solid var(--line);padding:26px 0;display:grid;grid-template-columns:64px minmax(0,1fr);gap:18px;position:relative;opacity:{{ s.op }};transition:opacity .3s">
+            <sc-if value="{{ s.active }}">
+              <span style="position:absolute;top:-1px;left:0;right:0;height:2px;background:var(--acc);transform-origin:left;animation:fill 5s linear both"></span>
+            </sc-if>
+            <span style="font-family:'JetBrains Mono';font-size:14px;color:var(--acc);padding-top:6px">{{ s.n }}</span>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <span data-m="stepTitle" style="font-family:Unbounded;font-size:26px;font-weight:500;letter-spacing:-.02em">{{ s.title }}</span>
+              <sc-if value="{{ s.active }}">
+                <span style="font-size:16px;line-height:1.6;color:var(--mute);max-width:480px;animation:pop .4s both;text-wrap:pretty">{{ s.text }}</span>
+              </sc-if>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div data-m="stage" style="position:relative;min-height:460px;border-radius:24px;background:var(--panel);border:1px solid var(--line);overflow:hidden;display:flex;align-items:center;justify-content:center;padding:40px;background-image:radial-gradient(circle at 50% 120%,color-mix(in oklch,var(--acc) 22%,transparent),transparent 60%)">
+        <sc-if value="{{ st0 }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;flex-direction:column;gap:18px;width:100%;max-width:420px;animation:pop .5s both">
+            <span style="font-family:'JetBrains Mono';font-size:12px;color:var(--mute)">ПРОГНОЗ · СТАЛЬ 09Г2С</span>
+            <span style="font-family:Unbounded;font-size:clamp(56px,7vw,96px);line-height:1;letter-spacing:-.04em">t−4<span style="font-size:.35em;color:var(--mute)"> дня</span></span>
+            <span style="font-size:16px;color:var(--mute)">до падения ниже страхового запаса при текущем плане выпуска</span>
+            <div style="display:flex;gap:6px;align-items:flex-end;height:80px">
+              <span style="flex:1;height:92%;background:var(--ok);border-radius:3px"></span><span style="flex:1;height:84%;background:var(--ok);border-radius:3px"></span><span style="flex:1;height:73%;background:var(--ok);border-radius:3px"></span><span style="flex:1;height:61%;background:var(--ok);border-radius:3px"></span><span style="flex:1;height:52%;background:var(--ok);border-radius:3px"></span><span style="flex:1;height:40%;background:var(--acc);border-radius:3px"></span><span style="flex:1;height:31%;background:var(--acc);border-radius:3px"></span><span style="flex:1;height:22%;background:var(--acc);border-radius:3px;opacity:.5"></span><span style="flex:1;height:12%;background:var(--acc);border-radius:3px;opacity:.3"></span>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ st1 }}">
+          <div style="display:flex;flex-direction:column;gap:22px;align-items:center;text-align:center;animation:pop .5s both">
+            <span style="font-family:'JetBrains Mono';font-size:12px;color:var(--mute)">ОПРОШЕНО → В ШОРТ-ЛИСТЕ</span>
+            <span style="font-family:Unbounded;font-size:clamp(64px,9vw,128px);line-height:1;letter-spacing:-.05em">14<span style="color:var(--acc)">→</span>3</span>
+            <span style="font-size:16px;color:var(--mute);max-width:320px">цена, срок, условия оплаты, история качества — в одной оценке</span>
+          </div>
+        </sc-if>
+        <sc-if value="{{ st2 }}">
+          <div style="display:flex;flex-direction:column;gap:12px;width:100%;max-width:420px;animation:pop .5s both">
+            <div style="align-self:flex-end;background:var(--fg);color:var(--bg);padding:13px 16px;border-radius:16px 16px 4px 16px;font-size:15px;line-height:1.45">Готовы взять 120 т при отсрочке 30 дней. Цена 55 000 ₽/т?</div>
+            <div style="align-self:flex-start;border:1px solid var(--line);background:var(--bg2);padding:13px 16px;border-radius:16px 16px 16px 4px;font-size:15px;line-height:1.45">Можем 56 200 ₽/т и доставку за наш счёт.</div>
+            <div style="align-self:flex-end;background:var(--fg);color:var(--bg);padding:13px 16px;border-radius:16px 16px 4px 16px;font-size:15px;line-height:1.45">Принимаем при сроке 5 дней.</div>
+            <span style="font-family:'JetBrains Mono';font-size:12px;color:var(--ok);align-self:center;padding-top:8px">−5,8% К ПРАЙСУ · В ПРЕДЕЛАХ ВАШИХ ПРАВИЛ</span>
+          </div>
+        </sc-if>
+        <sc-if value="{{ st3 }}">
+          <div style="display:flex;flex-direction:column;gap:22px;align-items:center;animation:pop .5s both">
+            <span style="font-family:'JetBrains Mono';font-size:12px;color:var(--mute)">ВАШЕ УЧАСТИЕ</span>
+            <button data-m="bigBtn" style="background:var(--acc);color:var(--accInk);border:0;padding:28px 52px;border-radius:999px;font-family:Unbounded;font-size:24px;font-weight:500;cursor:pointer;animation:pulse 1.6s infinite">Утвердить</button>
+            <span style="font-size:16px;color:var(--mute)">одно нажатие вместо трёх дней переписки</span>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sim" ref="{{ simRef }}" style="border-bottom:1px solid var(--line);background:var(--bg2)">
+  <div data-m="secIn" style="max-width:1320px;margin:0 auto;padding:120px 28px;display:flex;flex-direction:column;gap:48px">
+    <div data-reveal="1" style="display:flex;flex-direction:column;gap:20px;max-width:820px">
+      <span style="font-family:'JetBrains Mono';font-size:12px;letter-spacing:.1em;color:var(--acc)">[02] СИМУЛЯТОР СКЛАДА</span>
+      <h2 data-m="h2" style="margin:0;font-family:Unbounded;font-weight:500;font-size:clamp(34px,4.4vw,64px);line-height:1.02;letter-spacing:-.03em;text-wrap:balance">Подставьте свои цифры. Посмотрите, где кончается сырьё.</h2>
+      <p data-m="p" style="margin:0;font-size:18px;line-height:1.6;color:var(--mute);text-wrap:pretty">90 дней одной позиции: ручная проверка раз в неделю против агента, который пересчитывает точку заказа каждый день.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px">
+      <sc-for list="{{ sliders }}" as="sl" hint-placeholder-count="4">
+        <label style="display:flex;flex-direction:column;gap:12px;padding:20px;border:1px solid var(--line);border-radius:16px;background:var(--panel)">
+          <span style="display:flex;justify-content:space-between;align-items:baseline;gap:12px">
+            <span style="font-size:14px;color:var(--mute)">{{ sl.label }}</span>
+            <span style="font-family:Unbounded;font-size:22px">{{ sl.display }}</span>
+          </span>
+          <input type="range" min="{{ sl.min }}" max="{{ sl.max }}" step="1" value="{{ sl.value }}" sc-camel-on-change="{{ sl.set }}" style="width:100%;cursor:pointer">
+        </label>
+      </sc-for>
+    </div>
+
+    <div data-m="chartBox" style="border:1px solid var(--line);border-radius:24px;background:var(--panel);padding:28px;display:flex;flex-direction:column;gap:20px">
+      <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;font-size:14px">
+        <span style="display:flex;align-items:center;gap:8px"><span style="width:22px;height:3px;background:var(--ok);border-radius:2px"></span>С агентом</span>
+        <span style="display:flex;align-items:center;gap:8px;color:var(--mute)"><span style="width:22px;height:0;border-top:2px dashed var(--mute)"></span>Вручную</span>
+        <span style="display:flex;align-items:center;gap:8px;color:var(--mute)"><span style="width:12px;height:12px;background:color-mix(in oklch,var(--acc) 35%,transparent);border-radius:2px"></span>Дефицит (вручную)</span>
+        <button data-m="playBtn" sc-camel-on-click="{{ play }}" style="margin-left:auto;background:var(--fg);color:var(--bg);border:0;padding:11px 18px;border-radius:999px;font-weight:600;font-size:14px;cursor:pointer">▶ Прогнать 90 дней</button>
+      </div>
+      <div data-m="chart" style="position:relative;width:100%;height:clamp(220px,28vw,340px)">
+      <svg sc-camel-view-box="0 0 1000 300" sc-camel-preserve-aspect-ratio="none" style="position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible">
+        <defs>
+          <linearGradient id="agFill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" sc-camel-stop-color="var(--ok)" sc-camel-stop-opacity="0.28"></stop>
+            <stop offset="1" sc-camel-stop-color="var(--ok)" sc-camel-stop-opacity="0"></stop>
+          </linearGradient>
+        </defs>
+        <line x1="0" x2="1000" y1="290" y2="290" stroke="var(--line)" sc-camel-vector-effect="non-scaling-stroke"></line>
+        <sc-for list="{{ chart.outs }}" as="r">
+          <rect x="{{ r.x }}" y="0" width="{{ r.w }}" height="290" fill="var(--acc)" opacity="0.22"></rect>
+        </sc-for>
+        <line x1="0" x2="1000" y1="{{ chart.rop }}" y2="{{ chart.rop }}" stroke="var(--ok)" sc-camel-stroke-dasharray="2 6" opacity="0.6" sc-camel-vector-effect="non-scaling-stroke"></line>
+        <polygon points="{{ chart.area }}" fill="url(#agFill)"></polygon>
+        <polyline points="{{ chart.manual }}" fill="none" stroke="var(--mute)" sc-camel-stroke-width="2" sc-camel-stroke-dasharray="6 6" sc-camel-vector-effect="non-scaling-stroke"></polyline>
+        <polyline points="{{ chart.agent }}" fill="none" stroke="var(--ok)" sc-camel-stroke-width="3" sc-camel-stroke-linejoin="round" sc-camel-vector-effect="non-scaling-stroke"></polyline>
+        <line x1="{{ chart.cx }}" x2="{{ chart.cx }}" y1="0" y2="290" stroke="var(--fg)" opacity="0.25" sc-camel-vector-effect="non-scaling-stroke"></line>
+      </svg>
+      <sc-for list="{{ chart.orders }}" as="o">
+        <span style="position:absolute;left:{{ o.l }};top:{{ o.t }};width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:var(--panel);border:2.5px solid var(--ok);box-sizing:border-box"></span>
+      </sc-for>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-family:'JetBrains Mono';font-size:11px;color:var(--mute)"><span>День 1</span><span data-m="axisMid">┄ точка заказа агента</span><span>День 90</span></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:20px;overflow:hidden">
+      <sc-for list="{{ stats }}" as="k" hint-placeholder-count="4">
+        <div data-m="stat" style="background:var(--panel);padding:26px;display:flex;flex-direction:column;gap:10px">
+          <span style="font-size:14px;color:var(--mute)">{{ k.label }}</span>
+          <span data-m="statV" style="font-family:Unbounded;font-size:44px;letter-spacing:-.03em;line-height:1;color:{{ k.c }}">{{ k.v }}</span>
+          <span style="font-family:'JetBrains Mono';font-size:12px;color:var(--mute)">{{ k.sub }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+
+<section id="cabinet" style="position:relative;overflow:hidden;border-bottom:1px solid var(--line)">
+  <div style="position:absolute;right:-300px;top:-200px;width:900px;height:900px;border-radius:50%;background:radial-gradient(circle,color-mix(in oklch,var(--acc) 18%,transparent),transparent 60%);pointer-events:none"></div>
+  <div data-m="secIn" style="position:relative;max-width:1320px;margin:0 auto;padding:120px 28px;display:flex;flex-direction:column;gap:48px">
+    <div data-reveal="1" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:32px;align-items:end">
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <span style="font-family:'JetBrains Mono';font-size:12px;letter-spacing:.1em;color:var(--acc)">[03] ЛИЧНЫЙ КАБИНЕТ</span>
+        <h2 data-m="h2" style="margin:0;font-family:Unbounded;font-weight:500;font-size:clamp(34px,4.4vw,64px);line-height:1.02;letter-spacing:-.03em;text-wrap:balance">Один вход. Покупайте и продавайте.</h2>
+      </div>
+      <p data-m="p" style="margin:0;font-size:18px;line-height:1.6;color:var(--mute);max-width:520px;text-wrap:pretty">Вход по логину и паролю. Производство ставит закупки на автопилот, поставщик получает запросы агента и отвечает на них в том же кабинете.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:24px;align-items:stretch">
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <div style="display:flex;padding:6px;border:1px solid var(--line);border-radius:999px;background:var(--panel);align-self:flex-start;gap:4px">
+          <sc-for list="{{ roles }}" as="r" hint-placeholder-count="2">
+            <button sc-camel-on-click="{{ r.pick }}" style="border:0;padding:12px 22px;border-radius:999px;font-family:Manrope;font-weight:700;font-size:15px;cursor:pointer;background:{{ r.bg }};color:{{ r.fg }};transition:all .25s">{{ r.label }}</button>
+          </sc-for>
+        </div>
+        <div style="display:flex;flex-direction:column">
+          <sc-for list="{{ roleFeats }}" as="ft" hint-placeholder-count="4">
+            <div style="display:grid;grid-template-columns:40px minmax(0,1fr);gap:14px;padding:20px 0;border-top:1px solid var(--line);animation:pop .4s both">
+              <span style="font-family:'JetBrains Mono';font-size:13px;color:var(--acc);padding-top:3px">{{ ft.n }}</span>
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <span style="font-family:Unbounded;font-size:19px;font-weight:500;letter-spacing:-.01em">{{ ft.t }}</span>
+                <span style="font-size:15px;line-height:1.55;color:var(--mute);text-wrap:pretty">{{ ft.d }}</span>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <div data-m="stage" style="position:relative;border-radius:24px;background:var(--panel);border:1px solid var(--line);padding:28px;display:flex;flex-direction:column;gap:18px;overflow:hidden">
+        <div style="display:flex;align-items:center;gap:10px;font-family:'JetBrains Mono';font-size:12px;color:var(--mute)">
+          <span style="width:8px;height:8px;border-radius:50%;background:var(--ok)"></span>
+          <span>{{ brand }} · {{ roleTag }}</span>
+          <span style="margin-left:auto">{{ roleUser }}</span>
+        </div>
+        <sc-for list="{{ roleRows }}" as="rw" hint-placeholder-count="3">
+          <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:16px;border:1px solid var(--line);border-radius:14px;background:var(--bg2);animation:pop .4s both">
+            <div style="display:flex;flex-direction:column;gap:4px;min-width:0">
+              <span style="font-weight:600;font-size:15px">{{ rw.t }}</span>
+              <span style="font-size:13px;color:var(--mute)">{{ rw.d }}</span>
+            </div>
+            <span style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.06em;padding:6px 10px;border-radius:999px;border:1px solid {{ rw.c }};color:{{ rw.c }};white-space:nowrap">{{ rw.s }}</span>
+          </div>
+        </sc-for>
+        <div style="margin-top:auto;display:flex;flex-direction:column;gap:10px;padding-top:8px">
+          <button sc-camel-on-click="{{ openLogin }}" style="background:var(--acc);color:var(--accInk);border:0;padding:17px;border-radius:14px;font-family:Unbounded;font-size:15px;font-weight:500;cursor:pointer">{{ cabCta }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<sc-if value="{{ loginOpen }}">
+  <div sc-camel-on-click="{{ closeLogin }}" style="position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:16px;animation:pop .25s both">
+    <div sc-camel-on-click="{{ stop }}" style="position:relative;width:100%;max-width:420px;background:var(--panel);border:1px solid var(--line);border-radius:24px;padding:32px 28px;box-sizing:border-box;display:flex;flex-direction:column;gap:22px;box-shadow:0 40px 120px -20px rgba(0,0,0,.6)">
+      <button sc-camel-on-click="{{ closeLogin }}" aria-label="Закрыть" style="position:absolute;top:14px;right:14px;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--fg);font-size:18px;cursor:pointer">×</button>
+      <div style="display:flex;align-items:center;gap:10px;font-family:Unbounded;font-weight:700;font-size:16px;letter-spacing:.04em">
+        <span style="width:12px;height:12px;background:var(--acc);transform:rotate(45deg);display:block"></span>{{ brand }}
+      </div>
+      <sc-if value="{{ notLogged }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <h3 style="margin:0;font-family:Unbounded;font-weight:500;font-size:26px;letter-spacing:-.02em">Личный кабинет</h3>
+          <span style="font-size:14px;color:var(--mute)">Войдите, чтобы управлять агентом и утверждать заказы</span>
+        </div>
+        <form sc-camel-on-submit="{{ doLogin }}" style="display:flex;flex-direction:column;gap:14px">
+          <label style="display:flex;flex-direction:column;gap:8px">
+            <span style="font-family:'JetBrains Mono';font-size:11px;letter-spacing:.08em;color:var(--mute)">EMAIL</span>
+            <input type="email" required="" sc-camel-auto-complete="username" placeholder="ivanov@zavod.ru" value="{{ login }}" sc-camel-on-change="{{ setLogin }}" style="background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:15px 16px;color:var(--fg);font-family:Manrope;font-size:16px;outline:none">
+          </label>
+          <label style="display:flex;flex-direction:column;gap:8px">
+            <span style="display:flex;justify-content:space-between;font-family:'JetBrains Mono';font-size:11px;letter-spacing:.08em;color:var(--mute)"><span>ПАРОЛЬ</span><a href="#" sc-camel-on-click="{{ togglePass }}" style="color:var(--acc)">{{ passToggle }}</a></span>
+            <input type="{{ passType }}" required="" sc-camel-auto-complete="current-password" placeholder="••••••••" value="{{ pass }}" sc-camel-on-change="{{ setPass }}" style="background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:15px 16px;color:var(--fg);font-family:Manrope;font-size:16px;outline:none">
+          </label>
+          <sc-if value="{{ loginErr }}">
+            <span style="font-size:13px;color:var(--acc)">{{ loginErr }}</span>
+          </sc-if>
+          <button type="submit" style="margin-top:6px;background:var(--acc);color:var(--accInk);border:0;padding:16px;border-radius:12px;font-family:Unbounded;font-size:15px;font-weight:500;cursor:pointer">{{ loginBtn }}</button>
+          <span style="font-size:13px;color:var(--mute);text-align:center"><a href="cabinet.html#reset" style="color:var(--acc)">Забыли пароль?</a> · Нет аккаунта? <a href="cabinet.html#signup" style="color:var(--acc)">Регистрация</a></span>
+        </form>
+      </sc-if>
+      <sc-if value="{{ loggedIn }}">
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <h3 style="margin:0;font-family:Unbounded;font-weight:500;font-size:26px;letter-spacing:-.02em">Здравствуйте!</h3>
+          <span style="font-size:14px;color:var(--mute)">Вы вошли как <span style="color:var(--fg);font-weight:600">{{ login }}</span></span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden">
+          <div style="background:var(--bg2);padding:16px;display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;color:var(--mute)">Ждут утверждения</span><span style="font-family:Unbounded;font-size:26px;color:var(--acc)">{{ pendingCount }}</span></div>
+          <div style="background:var(--bg2);padding:16px;display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;color:var(--mute)">Позиций на контроле</span><span style="font-family:Unbounded;font-size:26px">4</span></div>
+        </div>
+        <a href="cabinet.html" style="background:var(--acc);color:var(--accInk);padding:16px;border-radius:12px;font-family:Unbounded;font-size:15px;text-align:center">Открыть панель агента</a>
+        <button sc-camel-on-click="{{ logout }}" style="background:transparent;border:1px solid var(--line);color:var(--fg);padding:14px;border-radius:12px;font-family:Manrope;font-size:14px;font-weight:600;cursor:pointer">Выйти</button>
+      </sc-if>
+    </div>
+  </div>
+</sc-if>
+
+<footer style="border-top:1px solid var(--line)">
+  <div data-m="foot" style="max-width:1320px;margin:0 auto;padding:28px;display:flex;gap:24px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--mute)">
+    <span style="display:flex;align-items:center;gap:8px;font-family:Unbounded;color:var(--fg)"><span style="width:10px;height:10px;background:var(--acc);transform:rotate(45deg);display:block"></span>{{ brand }}</span>
+    <span>AI-агент закупок для производств</span>
+    <span style="margin-left:auto">© 2026</span>
+  </div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script="">
+const NAMES=[
+ {n:'ОРДЕР',d:'От «order»: агент, который сам ставит заказ.'},
+ {n:'ЗАПАС',d:'Просто и по-русски: сырьё, которое не кончается.'},
+ {n:'КВОРУМ',d:'Сделка, где сошлись цена, срок и условия.'},
+ {n:'РЕЗЕРВ',d:'Страховой запас на автопилоте.'}];
+const MATS0=[
+ {name:'Сталь 09Г2С',unit:'т',stock:.42,rate:.022,price:58400,qty:120,sups:['Уралпрокат','СевМеталл','ТехСнаб-Опт']},
+ {name:'Гранулы ПП 21030',unit:'кг',stock:.7,rate:.012,price:142,qty:18000,sups:['ПолимерТрейд','ХимКомплект','СибПласт']},
+ {name:'Краска RAL 7035',unit:'л',stock:.58,rate:.016,price:610,qty:2400,sups:['ЛКМ Групп','Колор-Про','ХимКомплект']},
+ {name:'Подшипник 6204-2RS',unit:'шт',stock:.88,rate:.014,price:96,qty:6000,sups:['Подшипник-Центр','Ролик-М','ТехСнаб-Опт']}];
+const STEPS=[
+ {n:'01',title:'Мониторинг',text:'Агент читает складские остатки каждые 15 минут и прогнозирует расход каждой позиции с учётом плана выпуска.'},
+ {n:'02',title:'Поиск поставщиков',text:'Когда запас подходит к точке заказа, агент опрашивает проверенных и новых поставщиков и сравнивает цену, срок, оплату и рейтинг.'},
+ {n:'03',title:'Переговоры',text:'Через API площадок или обычную почту агент торгуется в заданных вами рамках: скидка, отсрочка, доставка.'},
+ {n:'04',title:'Одна кнопка',text:'Вы получаете готовый проект заказа с обоснованием. Проверили — нажали «Утвердить». Остальное уже сделано.'}];
+const rub=n=>Math.round(n).toLocaleString('ru-RU')+' ₽';
+const num=n=>Math.round(n).toLocaleString('ru-RU');
+const clock=()=>new Date().toTimeString().slice(0,8);
+
+class Component extends DCLogic {
+  state={theme:'dark',name:3,mats:MATS0.map(m=>({...m})),phase:'monitor',target:-1,offers:[],msgs:[],draft:null,
+    log:[{t:clock(),tag:'[SYNC]',kind:'mute',text:'Режим эмуляции · 4 позиции на контроле'}],
+    step:0,use:60,vol:30,lead:9,safety:4,cursor:89,email:'',sent:false,loginOpen:false,role:'buy',login:'',pass:'',showPass:false,loggedIn:false,loginErr:'',loading:false,orderNo:1414};
+  heroRef=React.createRef(); simRef=React.createRef(); timers=[];
+  componentDidMount(){
+    if(window.RezervAuth)RezervAuth.current().then(r=>{if(r)this.setState({loggedIn:true,login:r.user.email});}).catch(()=>{});
+    this.tick=setInterval(()=>this.onTick(),600);
+    this.stepTimer=setInterval(()=>this.setState(s=>({step:(s.step+1)%4})),5000);
+    this.applyTheme();
+    const els=[...document.querySelectorAll('[data-reveal]')];
+    els.forEach(e=>{e.style.opacity=0;e.style.transform='translateY(30px)';e.style.transition='opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1)';});
+    this.io=new IntersectionObserver(en=>en.forEach(x=>{if(x.isIntersecting){x.target.style.opacity=1;x.target.style.transform='none';this.io.unobserve(x.target);}}),{threshold:.2});
+    els.forEach(e=>this.io.observe(e));
+    this.simIo=new IntersectionObserver(en=>{if(en[0].isIntersecting){this.play();this.simIo.disconnect();}},{threshold:.35});
+    if(this.simRef.current) this.simIo.observe(this.simRef.current);
+  }
+  componentWillUnmount(){clearInterval(this.tick);clearInterval(this.stepTimer);this.timers.forEach(clearTimeout);cancelAnimationFrame(this.raf);this.io&&this.io.disconnect();this.simIo&&this.simIo.disconnect();}
+  componentDidUpdate(){this.applyTheme();}
+  applyTheme(){document.documentElement.dataset.theme=this.state.theme;}
+  addLog(tag,kind,text){this.setState(s=>({log:[...s.log,{t:clock(),tag,kind,text}].slice(-4)}));}
+  at(ms,fn){this.timers.push(setTimeout(fn,ms));}
+  onTick(){
+    if(this.state.phase!=='monitor')return;
+    const mats=this.state.mats.map(m=>({...m,stock:Math.max(.05,m.stock-m.rate*(.5+Math.random()))}));
+    const hit=mats.findIndex(m=>m.stock<.3);
+    this.setState({mats});
+    if(hit>=0)this.startDeal(hit);
+  }
+  startDeal(i){
+    const m=this.state.mats[i],p=m.price;
+    const days=Math.max(2,Math.round(m.stock*14));
+    this.setState({phase:'detect',target:i,offers:[],msgs:[],draft:null});
+    this.addLog('[ALERT]','acc',`${m.name}: ${Math.round(m.stock*100)}%, хватит на ${days} дн.`);
+    const offers=[
+      {sup:m.sups[0],price:p*1.06,days:'9 дн.',rating:'4.1'},
+      {sup:m.sups[1],price:p*.97,days:'6 дн.',rating:'4.7',best:true},
+      {sup:m.sups[2],price:p*1.02,days:'4 дн.',rating:'4.4'}];
+    this.at(1000,()=>{this.setState({phase:'search'});this.addLog('[RFQ]','mute','Запрос цен отправлен 14 поставщикам');});
+    offers.forEach((o,k)=>this.at(1500+k*500,()=>this.setState(s=>({offers:[...s.offers,o]}))));
+    const best=offers[1],fin=p*.94;
+    this.at(3100,()=>this.addLog('[RANK]','ok',`Лучший: ${best.sup}, ${rub(best.price)}/${m.unit}`));
+    const chat=[
+      {agent:true,text:`Готовы взять ${num(m.qty)} ${m.unit}. Цена ${rub(p*.92)} за ${m.unit} при отсрочке 30 дней?`},
+      {sup:true,text:`Можем ${rub(fin)} и доставку за наш счёт.`},
+      {agent:true,text:'Принимаем при отгрузке за 5 дней.'},
+      {sup:true,text:'Согласовано, ждём заказ.'}];
+    this.at(3800,()=>{this.setState({phase:'negotiate'});this.addLog('[MAIL]','mute',`Переговоры с ${best.sup}`);});
+    chat.forEach((c,k)=>this.at(4000+k*1000,()=>this.setState(s=>({msgs:[...s.msgs,c]}))));
+    const avg=offers.reduce((a,o)=>a+o.price,0)/3;
+    this.at(8200,()=>{
+      this.setState(s=>({phase:'draft',draft:{no:'ЗК-2026-0'+s.orderNo,name:m.name,sup:best.sup,qty:num(m.qty)+' '+m.unit,total:rub(fin*m.qty),saved:'−'+rub((avg-fin)*m.qty)}}));
+      this.addLog('[DRAFT]','acc','Проект заказа готов. Нужно ваше подтверждение');
+    });
+  }
+  approve=()=>{
+    if(this.state.phase!=='draft')return;
+    const i=this.state.target;
+    this.setState({phase:'approved'});
+    this.addLog('[OK]','ok',`${this.state.draft.no} подписан и отправлен`);
+    this.at(1800,()=>this.setState(s=>({phase:'monitor',target:-1,offers:[],msgs:[],draft:null,orderNo:s.orderNo+1,
+      mats:s.mats.map((m,k)=>k===i?{...m,stock:.95}:m)})));
+  };
+  simulate(){
+    const {use,vol,lead,safety}=this.state;let seed=7;
+    const rnd=()=>{seed=(seed*16807)%2147483647;return seed/2147483647;};
+    const dem=[];for(let d=0;d<90;d++)dem.push(Math.max(0,use*(1+(rnd()*2-1)*vol/100*1.6)));
+    const run=(agent)=>{
+      let stock=use*14,pend=[],pts=[],orders=[],outs=0,sum=0;
+      for(let d=0;d<90;d++){
+        pend=pend.filter(o=>{if(o.at===d){stock+=o.q;return false;}return true;});
+        stock-=dem[d];if(stock<=0){stock=0;outs++;}
+        const pos=stock+pend.reduce((a,o)=>a+o.q,0);
+        if(agent){if(pos<=use*(lead+safety)){pend.push({at:d+lead,q:use*(lead+safety+10)});orders.push({d,v:stock});}}
+        else if(d%7===0&&pos<=use*lead*1.3){pend.push({at:d+lead+3,q:use*24});orders.push({d,v:stock});}
+        pts.push(stock);sum+=stock;
+      }
+      return {pts,orders,outs,avg:sum/90};
+    };
+    return {a:run(true),m:run(false)};
+  }
+  play=()=>{
+    cancelAnimationFrame(this.raf);const t0=performance.now();
+    const f=t=>{const c=Math.min(89,Math.floor((t-t0)/3000*89));this.setState({cursor:c});if(c<89)this.raf=requestAnimationFrame(f);};
+    this.raf=requestAnimationFrame(f);
+  };
+  renderVals(){
+    const s=this.state,brand=NAMES[s.name].n,ph=s.phase;
+    const phaseMap={monitor:['МОНИТОРИНГ','var(--ok)'],detect:['ТОЧКА ЗАКАЗА','var(--acc)'],search:['ПОИСК ПОСТАВЩИКОВ','var(--acc)'],negotiate:['ПЕРЕГОВОРЫ','var(--acc)'],draft:['ЖДЁТ ВАС','var(--acc)'],approved:['УТВЕРЖДЕНО','var(--ok)']};
+    const kc={acc:'var(--acc)',ok:'var(--ok)',mute:'var(--mute)'};
+    const sim=this.simulate(),W=1000,H=290,cur=s.cursor;
+    const mx=Math.max(...sim.a.pts,...sim.m.pts,s.use*(s.lead+s.safety))*1.1;
+    const X=d=>(d/89*W).toFixed(1),Y=v=>(H-v/mx*(H-20)).toFixed(1);
+    const line=p=>p.slice(0,cur+1).map((v,d)=>X(d)+','+Y(v)).join(' ');
+    const outs=[];sim.m.pts.forEach((v,d)=>{if(v===0&&d<=cur)outs.push({x:X(d),w:(W/89+.5).toFixed(1)});});
+    const setter=k=>e=>{cancelAnimationFrame(this.raf);this.setState({[k]:+e.target.value,cursor:89});};
+    const savedH=Math.round(sim.a.orders.length*3.5);
+    return {
+      brand,nameDesc:NAMES[s.name].d,themeLabel:s.theme==='dark'?'Светлая тема':'Тёмная тема',
+      toggleTheme:()=>this.setState(x=>({theme:x.theme==='dark'?'light':'dark'})),
+      names:NAMES.map((n,i)=>({n:n.n,bg:i===s.name?'var(--fg)':'transparent',fg:i===s.name?'var(--bg)':'var(--fg)',pick:()=>this.setState({name:i})})),
+      heroRef:this.heroRef,
+      heroMove:e=>{const el=this.heroRef.current;if(!el)return;const r=el.getBoundingClientRect();el.style.setProperty('--mx',(e.clientX-r.left)+'px');el.style.setProperty('--my',(e.clientY-r.top)+'px');},
+      phaseLabel:phaseMap[ph][0],phaseColor:phaseMap[ph][1],
+      mats:s.mats.map((m,i)=>({name:m.name,w:(m.stock*100).toFixed(1)+'%',pct:Math.round(m.stock*100)+'%',c:m.stock<.3?'var(--acc)':'var(--ok)',op:s.target<0||s.target===i?1:.4})),
+      isMonitor:ph==='monitor'||ph==='detect',showOffers:ph==='search',showChat:ph==='negotiate',showDraft:ph==='draft'||ph==='approved',
+      canApprove:ph==='draft',isApproved:ph==='approved',
+      targetName:s.target>=0?s.mats[s.target].name.toUpperCase():'',
+      offers:s.offers.map(o=>({...o,price:rub(o.price),bg:o.best?'color-mix(in oklch,var(--ok) 12%,transparent)':'transparent',border:o.best?'var(--ok)':'var(--line)'})),
+      msgs:s.msgs.map(c=>({text:c.text,agent:!!c.agent,sup:!!c.sup})),
+      draft:s.draft||{},approve:this.approve,
+      log:s.log.map(l=>({...l,c:kc[l.kind]})),
+      steps:STEPS.map((x,i)=>({...x,active:i===s.step,op:i===s.step?1:.45,pick:()=>{clearInterval(this.stepTimer);this.setState({step:i});this.stepTimer=setInterval(()=>this.setState(q=>({step:(q.step+1)%4})),5000);}})),
+      st0:s.step===0,st1:s.step===1,st2:s.step===2,st3:s.step===3,
+      simRef:this.simRef,play:this.play,
+      sliders:[
+        {label:'Расход в день, ед.',min:10,max:150,value:s.use,display:s.use,set:setter('use')},
+        {label:'Волатильность спроса',min:0,max:60,value:s.vol,display:s.vol+'%',set:setter('vol')},
+        {label:'Срок поставки',min:2,max:21,value:s.lead,display:s.lead+' дн.',set:setter('lead')},
+        {label:'Страховой запас',min:0,max:14,value:s.safety,display:s.safety+' дн.',set:setter('safety')}],
+      chart:{agent:line(sim.a.pts),manual:line(sim.m.pts),area:line(sim.a.pts)+` ${X(cur)},${H} 0,${H}`,
+        orders:sim.a.orders.filter(o=>o.d<=cur).map(o=>({l:(X(o.d)/10)+'%',t:(Y(o.v)/3)+'%'})),outs,rop:Y(s.use*(s.lead+s.safety)),cx:X(cur)},
+      stats:[
+        {label:'Дней дефицита · с агентом',v:sim.a.outs,sub:'из 90',c:'var(--ok)'},
+        {label:'Дней дефицита · вручную',v:sim.m.outs,sub:'простой линии',c:sim.m.outs>0?'var(--acc)':'var(--fg)'},
+        {label:'Заказов подготовил агент',v:sim.a.orders.length,sub:'утверждено в 1 клик',c:'var(--fg)'},
+        {label:'Часов рутины сэкономлено',v:savedH,sub:'≈3,5 ч на заказ',c:'var(--fg)'}],
+      roles:[['buy','Я покупаю'],['sell','Я продаю']].map(([k,l])=>({label:l,bg:s.role===k?'var(--fg)':'transparent',fg:s.role===k?'var(--bg)':'var(--fg)',pick:()=>this.setState({role:k})})),
+      roleFeats:(s.role==='buy'?[
+        {t:'Проекты заказов',d:'Агент собирает заказ с обоснованием. Проверили и утвердили одной кнопкой.'},
+        {t:'Правила закупок',d:'Лимиты цен, допустимые отсрочки, белый список поставщиков: агент торгуется только в этих рамках.'},
+        {t:'Склад и прогноз',d:'Остатки, точки заказа и прогноз расхода по каждой позиции.'},
+        {t:'История и экономия',d:'Все сделки, переписка агента и сэкономленные деньги по каждому заказу.'}]:[
+        {t:'Входящие запросы',d:'Запросы цен от агентов покупателей приходят сразу в кабинет, без писем и звонков.'},
+        {t:'Каталог и прайс',d:'Загрузите позиции, цены и остатки. Агенты увидят их при подборе поставщика.'},
+        {t:'Переговоры',d:'Отвечайте на встречные предложения вручную или задайте свои правила скидок.'},
+        {t:'Заказы и рейтинг',d:'Подтверждённые заказы, статусы отгрузки и ваш рейтинг надёжности.'}]).map((x,i)=>({...x,n:'0'+(i+1)})),
+      roleTag:s.role==='buy'?'ПОКУПАТЕЛЬ':'ПОСТАВЩИК',roleUser:s.role==='buy'?'ООО «Завод»':'ООО «СевМеталл»',
+      roleRows:s.role==='buy'?[
+        {t:'Сталь 09Г2С · 120 т',d:'СевМеталл · 6 552 000 ₽ · −5,8%',s:'УТВЕРДИТЬ',c:'var(--acc)'},
+        {t:'Гранулы ПП · 18 000 кг',d:'ПолимерТрейд · переговоры, 2 из 4',s:'В РАБОТЕ',c:'var(--mute)'},
+        {t:'Краска RAL 7035 · 2 400 л',d:'ЛКМ Групп · отгружено',s:'ГОТОВО',c:'var(--ok)'}]:[
+        {t:'Запрос: сталь 09Г2С, 120 т',d:'ООО «Завод» · срок до 5 дней',s:'ОТВЕТИТЬ',c:'var(--acc)'},
+        {t:'Встречное: 55 000 ₽/т',d:'Агент покупателя · отсрочка 30 дней',s:'ТОРГ',c:'var(--mute)'},
+        {t:'Заказ ЗК-2026-01412',d:'Подтверждён · отгрузка 28.09',s:'ПРИНЯТ',c:'var(--ok)'}],
+      cabCta:s.loggedIn?'Открыть кабинет':(s.role==='buy'?'Войти как покупатель':'Войти как поставщик'),
+      cabLabel:s.loggedIn?'Кабинет':'Личный кабинет',userDot:s.loggedIn?'var(--ok)':'var(--acc)',
+      loginOpen:s.loginOpen,openLogin:()=>{if(s.loggedIn){location.href='cabinet.html';return;}this.setState({loginOpen:true,loginErr:''});},closeLogin:()=>this.setState({loginOpen:false}),openLoginLink:e=>{e.preventDefault();this.setState({loginOpen:true,loginErr:''});},
+      stop:e=>e.stopPropagation(),notLogged:!s.loggedIn,loggedIn:s.loggedIn,
+      login:s.login,pass:s.pass,setLogin:e=>this.setState({login:e.target.value,loginErr:''}),setPass:e=>this.setState({pass:e.target.value,loginErr:''}),
+      passType:s.showPass?'text':'password',passToggle:s.showPass?'скрыть':'показать',
+      togglePass:e=>{e.preventDefault();this.setState(x=>({showPass:!x.showPass}));},
+      loginErr:s.loginErr,loginBtn:s.loading?'Проверяем…':'Войти',pendingCount:ph==='draft'?1:0,
+      doLogin:async e=>{e.preventDefault();if(s.loading)return;if(!/^[^ @]+@[^ @]+[.][^ @]+$/.test(s.login.trim())||s.pass.length<6){this.setState({loginErr:'Введите email и пароль (минимум 6 символов)'});return;}
+        this.setState({loading:true,loginErr:''});const r=await RezervAuth.signIn(s.login,s.pass);
+        if(r.error){this.setState({loading:false,loginErr:r.error});return;}
+        this.setState({loading:false,loggedIn:true,pass:''});location.href='cabinet.html';},
+      logout:()=>{RezervAuth.signOut();this.setState({loggedIn:false,login:'',pass:''});},
+      email:s.email,setEmail:e=>this.setState({email:e.target.value}),
+      submit:e=>{e.preventDefault();this.setState({sent:true});},notSent:!s.sent,sent:s.sent
+    };
+  }
+}
+</script>
+
+
+</body></html>

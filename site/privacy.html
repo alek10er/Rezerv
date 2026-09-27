@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>РЕЗЕРВ — Политика конфиденциальности</title>
+<link rel="stylesheet" href="assets/fonts.css">
+<style>
+:root{--bg:#0c0d0b;--bg2:#121310;--panel:#161714;--fg:#eeede7;--mute:#8d8c85;--line:rgba(255,255,255,.09);--acc:oklch(0.74 0.17 50);color-scheme:dark}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f2f1ec;--bg2:#e9e8e2;--panel:#fbfaf6;--fg:#141511;--mute:#66655f;--line:rgba(0,0,0,.1);--acc:oklch(0.64 0.19 45);color-scheme:light}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:Manrope,system-ui,sans-serif;font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:var(--acc)}
+.top{max-width:820px;margin:0 auto;padding:28px 20px 0;display:flex;align-items:center;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;font-family:Unbounded;font-weight:700;font-size:16px;letter-spacing:.04em;color:var(--fg);text-decoration:none}
+.brand i{width:12px;height:12px;background:var(--acc);transform:rotate(45deg);display:block}
+.back{margin-left:auto;font-size:14px;font-weight:600;text-decoration:none;border:1px solid var(--line);padding:9px 16px;border-radius:999px;color:var(--fg)}
+main{max-width:820px;margin:0 auto;padding:48px 20px 80px}
+.kicker{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--acc)}
+h1{font-family:Unbounded;font-weight:500;font-size:clamp(28px,5vw,44px);line-height:1.1;letter-spacing:-.02em;margin:14px 0 12px}
+.date{color:var(--mute);font-size:14px;margin:0 0 36px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:24px 26px;margin-bottom:16px}
+.card.accent{border-color:color-mix(in oklch,var(--acc) 45%,transparent);background:color-mix(in oklch,var(--acc) 7%,var(--panel))}
+h2{font-family:Unbounded;font-weight:500;font-size:18px;margin:0 0 10px;display:flex;gap:12px;align-items:baseline}
+h2 span{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--acc);font-weight:400}
+p{margin:0 0 10px;color:color-mix(in oklch,var(--fg) 82%,var(--mute))}
+p:last-child,ul:last-child{margin-bottom:0}
+ul{margin:0 0 10px;padding-left:20px;color:color-mix(in oklch,var(--fg) 82%,var(--mute))}
+li{margin:4px 0}
+b{color:var(--fg)}
+footer{max-width:820px;margin:0 auto;padding:0 20px 40px;color:var(--mute);font-size:13px}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html"><i></i>РЕЗЕРВ</a>
+  <a class="back" href="cabinet.html">← В кабинет</a>
+</header>
+
+<main>
+  <span class="kicker">ДОКУМЕНТ · ПРОТОТИП</span>
+  <h1>Политика конфиденциальности и хранения данных</h1>
+  <p class="date">Редакция от 27 сентября 2026 г.</p>
+
+  <section class="card accent">
+    <h2><span>!</span>Коротко о главном</h2>
+    <ul>
+      <li>РЕЗЕРВ — <b>прототип</b>. Сервис работает в тестовом режиме.</li>
+      <li>Данные, которые вы вводите, <b>не проверяются</b> и никак не подтверждаются: мы не сверяем ИНН, ОГРН, адреса и телефоны с реестрами и не устанавливаем личность пользователя.</li>
+      <li>Данные компании нужны <b>только для покупателей</b> — чтобы контрагенты на площадке видели, с кем работают.</li>
+      <li>Данные могут храниться <b>на серверах за пределами Российской Федерации</b>.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2><span>01</span>Какие данные мы храним</h2>
+    <ul>
+      <li><b>Данные аккаунта:</b> email и пароль (пароль хранится только в зашифрованном виде, мы его не видим).</li>
+      <li><b>Профиль:</b> имя и выбранная роль — покупатель или поставщик.</li>
+      <li><b>Данные компании:</b> название, ИНН, КПП, ОГРН/ОГРНИП, юридический адрес, адрес склада, телефон, категории товаров.</li>
+    </ul>
+    <p>Все поля компании заполняются добровольно, кроме названия. Вы можете оставить их пустыми.</p>
+  </section>
+
+  <section class="card">
+    <h2><span>02</span>Данные не проверяются</h2>
+    <p>Всё, что вы вводите, сохраняется в том виде, в котором вы это указали. Мы не проверяем подлинность реквизитов, не запрашиваем документы и не связываем введённые данные с реальными лицами или организациями.</p>
+    <p>Поэтому <b>не рассчитывайте на реквизиты других пользователей как на подтверждённые</b>: перед реальной сделкой проверяйте контрагента самостоятельно, например по выписке из ЕГРЮЛ/ЕГРИП.</p>
+    <p>Указывайте только те сведения, которые готовы показать другим участникам площадки. Не вводите паспортные данные, банковские карты и другую чувствительную информацию.</p>
+  </section>
+
+  <section class="card">
+    <h2><span>03</span>Зачем нужны данные</h2>
+    <p>Реквизиты компании используются <b>только для покупателей</b>: чтобы участники площадки понимали, от чьего имени приходят запросы и предложения.</p>
+    <p>Email используется для входа, подтверждения регистрации и восстановления пароля. Мы не присылаем рекламу и не передаём данные третьим лицам в маркетинговых целях.</p>
+  </section>
+
+  <section class="card">
+    <h2><span>04</span>Где хранятся данные</h2>
+    <p>Для хранения данных и авторизации используется облачная платформа <b>Supabase</b>. Её серверы <b>могут находиться за пределами территории Российской Федерации</b>.</p>
+    <p>Письма (подтверждение email, сброс пароля) отправляются через почтовый сервис Яндекса.</p>
+    <p>Если хранение ваших данных за рубежом для вас неприемлемо — не регистрируйтесь или удалите аккаунт.</p>
+  </section>
+
+  <section class="card">
+    <h2><span>05</span>Защита данных</h2>
+    <ul>
+      <li>Соединение с сайтом и базой шифруется.</li>
+      <li>Каждый пользователь видит и может изменять только свой профиль.</li>
+      <li>Роль и email нельзя изменить из кабинета.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2><span>06</span>Ваши права</h2>
+    <ul>
+      <li>Изменить данные компании — в кабинете: <b>Настройки → Компания → Изменить</b>.</li>
+      <li>Удалить аккаунт и все связанные данные — напишите нам с email, на который зарегистрирован аккаунт.</li>
+    </ul>
+    <p>Контакт: <a href="mailto:jarvis.ai.free@yandex.ru">jarvis.ai.free@yandex.ru</a></p>
+  </section>
+
+  <section class="card">
+    <h2><span>07</span>Согласие</h2>
+    <p>Регистрируясь и заполняя данные в кабинете, вы подтверждаете, что ознакомились с этой политикой и согласны на хранение и обработку указанных данных на описанных условиях, включая возможное хранение за пределами РФ.</p>
+  </section>
+</main>
+
+<footer>◆ РЕЗЕРВ — AI-агент закупок для производств · прототип</footer>
+</body>
+</html>
